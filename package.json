@@ -1,8 +1,16 @@
 {
   "name": "v3hooks",
-  "version": "1.2.14",
+  "version": "1.2.15",
+  "author": "yanzhandong",
+  "description":"针对 Vue3 的实用Hooks集合",
+  "keywords":["vuehook","hook","vue3","vue3hook","v3hooks","vueHook"],
+  "homepage":"https://yanzhandong868.gitbook.io/v3hooks/",
   "main": "dist/index.js",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanzhandong/v3hooks.git"
+  },
+  "license": "MIT",  
   "scripts": {
     "watch": "rollup -c --watch",
     "build": "cross-env NODE_ENV=production rollup -c"
