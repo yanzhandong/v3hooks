@@ -9,15 +9,16 @@
 </h4>
 <br>
 
+## 🔨安装
 <h4 align="center">
   <pre>npm i <a href="https://www.npmjs.com/package/v3hooks">v3hooks</a>
   <i>or</i>
   yarn add <a href="https://www.npmjs.com/package/v3hooks">v3hooks</a></pre>
 </h4>
 
+## 🏃文档
 <h4 align="center">
-  GitBook
-  <a href="https://yanzhandong868.gitbook.io/v3hooks/">文档链接</a>
+  <a href="https://yanzhandong868.gitbook.io/v3hooks/">使用文档</a>
 </h4>
 
 <br>
