@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/yanzhandong/v3hooks.git"
   },
-  "license": "MIT",  
+  "license": "MIT",
   "scripts": {
     "watch": "rollup -c --watch",
     "build": "cross-env NODE_ENV=production rollup -c"
