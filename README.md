@@ -58,7 +58,7 @@
 
 
 ## 常见问题
-常见问题请见 [文档](https://github.com/yanzhandong/v3hooks/docs/question.md)
+常见问题请见 [文档](https://github.com/yanzhandong/v3hooks/blob/master/docs/question.md)
 
 
 ## 🤝 感谢
