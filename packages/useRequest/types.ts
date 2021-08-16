@@ -1,6 +1,10 @@
 import { Ref } from 'vue';
+import { FetchParams } from './src/fetch'
+
 // Service请求实例
 export type Service = (...args: any[]) => Promise<any>;
+
+export interface FetchService extends FetchParams{};
 
 
 // 请求参数

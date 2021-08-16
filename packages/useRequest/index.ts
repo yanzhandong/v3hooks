@@ -2,11 +2,13 @@ import {
     BaseOptions,
     Result,
     Run,
+    Service,
+    FetchService,
     Cancel
 } from './types';
 import { 
     shallowRef, 
-    ref, 
+    ref,
     watch
 } from 'vue';
 import { 
@@ -38,7 +40,7 @@ const defaultOptions = {
 };
 
 
-const useRequest = <T>(service: any,options?:BaseOptions )=>{
+const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
      
     const { 
         manual,

@@ -1,4 +1,4 @@
-export interface Params extends RequestInit{
+export interface FetchParams extends RequestInit{
     url: RequestInfo,
 }
 
@@ -20,8 +20,8 @@ const defaultParams = {
  * @returns FetchData
  */
 
-function fetchData( p:Params ){
-    const params = { ...defaultParams, ...p } as Params;
+function fetchData( p:FetchParams ){
+    const params = { ...defaultParams, ...p } as FetchParams;
     return fetch( params.url, params);
 }
 
