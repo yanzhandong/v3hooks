@@ -4,7 +4,7 @@
 (此处与 ahooks 略有不同，ahooks只能两个状态切换，本hook支持N个状态切换)
 
 
-## 使用
+## 基础使用
 
 ```
 <template>
@@ -52,13 +52,58 @@ export default {
 useToggle接受多个参数，且在actions中进行同等数量导出。Actions中第一个为toggle切换，其余为设置对应参数。
 
 
+## 异步值Toggle
+
+```
+<template>
+  <div class="hello">
+    <div> {{state}}</div>
+    <button @click="toggle">toggle</button>
+    <button @click="setToggle">setToggle</button>
+  </div>
+</template>
+
+<script lang="ts">
+import { ref } from 'vue';
+import { useToggle,useTimeout } from "../../../dist/index.js";
+export default {
+  
+  setup() {
+
+    const platform = ref<string>('安装 App');
+    const platform2 = ref<string>('安装中...');
+    const [state, [toggle]] = useToggle(platform, platform2,'不安装');
+
+    useTimeout(() => {
+      platform.value = `安装 ios App`
+      platform2.value = '安装中2....'
+    }, ref(3000));
+
+    const setToggle = ()=>{
+      toggle(platform)
+    }
+    
+    return {
+      state,
+      toggle,
+      setToggle
+    };
+  },
+};
+</script>
+```
+
+useToggle可以接受ref值的切换，内部支持了响应式，如果ref值发生变化,state会监听其变化同步修改。
+
+
+
 ## Api
 
 ### Params
 
 | 参数 | 说明 | 类型 | 默认值 |
 | :----| :---- | :---- | :---- |
-| value | 需要防抖的值 | any | - |
+| value | 需要切换的值 | string - number - boolean - undefined | - |
 | ... | 同上 | 同上 | - |
 
 

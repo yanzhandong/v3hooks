@@ -1,6 +1,5 @@
-<h1 align="center">
-  V3Hooks
-</h1>
+<p align="center"><img align="center" style="width:200px" src="https://img-steward-online.goodaa.com.cn/1e7d9228151f4098876f733a9d291efc.png"/></p><br/>
+<h1 align="center"><b>V3Hooks</b></h1>
 <h4 align="center">针对 Vue3 的实用Hooks集合</h4>
 
 
@@ -54,8 +53,9 @@
   - `useFullscreen` — 一个用于处理 dom 全屏的 Hook.
   - `useDocumentVisibility` — 可以获取页面可见状态的 Hook.
   - `useTextSelection` — 实时获取用户当前选取的文本内容及位置Hook.
+  - `useQRCode` — 用来生成二维码的Hook.
 - **Advanced**
-  - `useVirtualList` — 用于增加异步函数增加竞态锁，防并发 Hook.
+  - `useLockFn` — 用于增加异步函数增加竞态锁，防并发 Hook.
 
 
 ## 常见问题

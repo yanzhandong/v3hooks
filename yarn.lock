@@ -195,6 +195,11 @@ debug@^4.1.1:
   dependencies:
     ms "2.1.2"
 
+easyqrcodejs@^4.4.5:
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/easyqrcodejs/-/easyqrcodejs-4.4.5.tgz#c4bf23c52d6f07312fe9520235fa66b438e8d8d2"
+  integrity sha512-wDcZDD3R0QKYC5MejAf5POltWtqbDpQ0/8wLOJ33kg+SHOgecnW8eddsYylT29ZIS8ZlcY3pRfIA+BUNzybI2w==
+
 escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"

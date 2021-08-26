@@ -6,14 +6,6 @@
     <button @click="handleMutate">突变测试</button>
     <button @click="handleRefreshDeps">refreshDeps测试</button>
 
-    <!-- useToggle测试 -->
-    <p>useToggleDemoState: {{useToggleDemoState}}</p>
-    <button @click="handleUseTToggle">直接设置</button>
-    <button @click="useTToggle">useTToggle</button>
-    <button @click="useTSetLeft">useTSetLeft</button>
-    <button @click="useTSetCenter">useTSetCenter</button>
-    <button @click="useTSetRight">useTSetRight</button>
-
     <p>useBooleanState：{{ useBooleanState }}</p>
     <button @click="useBooleanToggle">toggle</button>
     <button @click="setTrue">setTrue</button>
@@ -26,8 +18,6 @@
 
 import { 
   useRequest, 
-  useToggle,
-  useBoolean,
   useTimeout
 } from "../../../dist/index.js";
 
@@ -84,14 +74,6 @@ export default {
       });
     };
 
-    //useToggle 测试
-    const [ useToggleDemoState, [ useTToggle, useTSetLeft, useTSetCenter, useTSetRight]] = useToggle('left','center','right');
-    const handleUseTToggle = ()=>{
-      useTToggle('center')
-    };
-
-    //useBoolean 测试
-    const [ useBooleanState,{ toggle: useBooleanToggle, setTrue, setFalse}] = useBoolean();
 
 
 
@@ -102,18 +84,6 @@ export default {
       cancel,
       handleMutate,
       handleRefreshDeps,
-
-      useToggleDemoState,
-      handleUseTToggle,
-      useTToggle,
-      useTSetLeft,
-      useTSetCenter,
-      useTSetRight,
-
-      useBooleanState,
-      useBooleanToggle,
-      setTrue,
-      setFalse,
     };
   },
 };

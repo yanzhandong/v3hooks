@@ -1,10 +1,17 @@
 {
   "name": "v3hooks",
-  "version": "1.2.16",
+  "version": "1.2.19",
   "author": "yanzhandong",
-  "description":"针对 Vue3 的实用Hooks集合",
-  "keywords":["vuehook","hook","vue3","vue3hook","v3hooks","vueHook"],
-  "homepage":"https://yanzhandong868.gitbook.io/v3hooks/",
+  "description": "针对 Vue3 的实用Hooks集合",
+  "keywords": [
+    "vuehook",
+    "hook",
+    "vue3",
+    "vue3hook",
+    "v3hooks",
+    "vueHook"
+  ],
+  "homepage": "https://yanzhandong868.gitbook.io/v3hooks/",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
@@ -33,6 +40,7 @@
   },
   "dependencies": {
     "dayjs": "^1.10.5",
+    "easyqrcodejs": "^4.4.5",
     "js-cookie": "^2.2.1"
   }
 }

@@ -51,7 +51,7 @@ useBoolean默认切换布尔值状态，也可以接收一个参数作为新的�
 
 | 参数 | 说明 | 类型 | 默认值 |
 | :----| :---- | :---- | :---- |
-| defaultValue | 可选项，传入默认的状态值	 | boolean | false |
+| defaultValue | 可选项，传入默认的状态值	 | Ref<boolean> | false |
 
 
 ### Result

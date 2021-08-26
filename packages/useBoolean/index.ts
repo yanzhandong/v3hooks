@@ -1,3 +1,4 @@
+import { Ref } from 'vue';
 import useToggle from '../useToggle';
 
 // 默认值
@@ -11,8 +12,7 @@ interface Actions{
 
 function useBoolean(
     value?: boolean
-): [boolean,Actions]
-
+): [Ref<boolean>,Actions]
 /**
  * 
  * @param defaultValue

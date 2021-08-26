@@ -87,6 +87,18 @@ export function createRouter() {
             {
                 path:'/useInterval',
                 component: () => import('./pages/useInterval/index.vue')
+            },
+            {
+                path:'/useQRCode',
+                component: () => import('./pages/useQRCode/index.vue')
+            },
+            {
+                path:'/useToggle',
+                component: () => import('./pages/useToggle/index.vue')
+            },
+            {
+                path:'/useBoolean',
+                component: () => import('./pages/useBoolean/index.vue')
             }
         ]
     })
