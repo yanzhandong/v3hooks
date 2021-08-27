@@ -99,6 +99,10 @@ export function createRouter() {
             {
                 path:'/useBoolean',
                 component: () => import('./pages/useBoolean/index.vue')
+            },
+            {
+                path:'/useWebSocket',
+                component: () => import('./pages/useWebSocket/index.vue')
             }
         ]
     })

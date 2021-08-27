@@ -1,27 +1,28 @@
-import { ref, Ref, onUnmounted } from 'vue';
+import { ref, isRef, Ref, onUnmounted } from 'vue';
 import { Fn } from '../utils';
 
 
 const useTimeout = (
     fn: Fn,
-    delay: Ref<number> | Ref<undefined> | Ref<null>
+    delay: number | Ref<number | undefined | null>
 )=>{
+    const state = isRef(delay) ? delay : ref(delay);
 
     let timer: null | NodeJS.Timeout = null;
     
     const clear = ()=> timer && clearTimeout(timer)
 
     const handler = ()=>{
-        if( delay.value === undefined || delay.value === null ) return
+        if(state.value === undefined || state.value === null ) return
         fn();
     };
 
     const run = ()=>{
-        if( delay.value === undefined || delay.value === null ){
+        if( state.value === undefined || state.value === null ){
             clear();
             return
         }
-        setTimeout(handler,delay.value)
+        setTimeout(handler,state.value)
     }
     
     run()

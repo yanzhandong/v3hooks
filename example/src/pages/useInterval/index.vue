@@ -28,6 +28,10 @@ export default {
       console.log('fuck')
     },delay)
 
+    useTimeout(()=>{
+      console.log('fuck2')
+    },1000)
+
     return {
       data,
       clear

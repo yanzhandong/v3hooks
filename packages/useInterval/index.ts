@@ -1,4 +1,4 @@
-import { ref, Ref, onMounted, onUnmounted } from 'vue';
+import { ref, Ref, onMounted, onUnmounted, isRef } from 'vue';
 import { Fn } from '../utils';
 
 interface UseIntervalOptions{
@@ -11,13 +11,15 @@ const defaultOptions = {
 
 const useInterval = (
     fn: Fn,
-    delay: Ref<number> | Ref<undefined> | Ref<null>,
+    delay: number | Ref<number | undefined | null>,
     options?: UseIntervalOptions
 )=>{
 
     const{
         immediate
     } = {...defaultOptions,...options};
+    
+    const state = isRef(delay) ? delay : ref(delay);
 
     if( immediate ) fn()
 
@@ -26,17 +28,17 @@ const useInterval = (
     const clear = ()=> timer && clearTimeout(timer)
 
     const handler = ()=>{
-        if( delay.value === undefined || delay.value === null ) return
+        if( state.value === undefined || state.value === null ) return
         fn();
         run();
     };
 
     const run = ()=>{
-        if( delay.value === undefined || delay.value === null ){
+        if( state.value === undefined || state.value === null ){
             clear();
             return
         }
-        setTimeout(handler,delay.value)
+        setTimeout(handler,state.value)
     }
     
     run();

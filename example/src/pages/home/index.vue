@@ -30,7 +30,7 @@ const mockRequest = ()=>{
   return new Promise((resolve)=>{
     useTimeout(()=>{
       resolve({code:200,data:[{name:'aaa'},{name:'bbbbb'},{name:'ccccc'}]})
-    },ref(500))
+    },500)
   })
 };
 

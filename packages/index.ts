@@ -23,6 +23,7 @@ import useTextSelection from './useTextSelection/index'
 import useInterval from './useInterval/index'
 import useTimeout from './useTimeout/index'
 import useQRCode from './useQRCode/index'
+import useWebSocket from './useWebSocket/index'
 
 // 暂时无法@/分包 未引入vue-router会导致都不能用
 // import useRouteQuery from './useRouteQuery/index';
@@ -51,6 +52,7 @@ export {
     useNetwork,
     useSet,
     useMap,
+    useWebSocket,
 
     // UI
     useVirtualList,

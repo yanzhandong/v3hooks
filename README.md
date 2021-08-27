@@ -12,7 +12,7 @@
 
 ## 🔨安装
 <h4 align="center">
-  <pre>npm i <a href="https://www.npmjs.com/package/v3hooks">v3hooks</a></pre>
+  <pre>npm i <a href="https://www.npmjs.com/package/v3hooks">v3hooks</a> --save</pre>
   <i>or</i>
   <pre>yarn add <a href="https://www.npmjs.com/package/v3hooks">v3hooks</a></pre>
 </h4>

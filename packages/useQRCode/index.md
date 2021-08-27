@@ -58,7 +58,7 @@ const useQRCode: (text: Text, options?: useQRCodeOptions | undefined) => Ref<str
 
 | 参数 | 说明 | 类型 | 默认值 |
 | :----| :---- | :---- | :---- |
-| text |  需要生成二维码的url或text	| string - Ref《string》 | - |
+| text |  需要生成二维码的url或text	| string - Ref<string> | - |
 | options |  二维码配置项	| Options | - |
 
 ### Options
