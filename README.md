@@ -46,6 +46,7 @@
   - `useNetwork` — 用于获取网络状态 Hook.
   - `useSet` — 用于管理Set的 Hook.
   - `useMap` — 用于管理Map的 Hook.
+  - `useWebSocket` — 用于处理 WebSocket 的 Hook。
   <!-- - `useRouteQuery` — 用于获取url query值的 Hook. -->
 - **UI**
   - `useVirtualList` — 用于长列表虚拟化列表的 Hook.
