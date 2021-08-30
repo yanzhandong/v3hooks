@@ -87,4 +87,4 @@ const state = useCookieState(
 | path | 可选，定义 cookie 可用的路径 | string 	| / |
 | domain | 可选，定义 cookie 可用的域，默认为 cookie 创建的域名 | string | - |
 | secure | 可选，cookie 传输是否需要 https 安全协议 | boolean | - |
-| sameSite | 可选，cookie 不能与跨域请求一起发送 | strict | lax | none	 | - |
+| sameSite | 可选，cookie 不能与跨域请求一起发送 | `strict` | `lax` | `none`	 | - |
