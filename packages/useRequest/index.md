@@ -3,13 +3,15 @@
 专注于管理异步请求的Hook，加速你的日常开发
 
 * 自动请求/手动请求
+* SWR(stale-while-revalidate)
+* 缓存/预加载
 * 屏幕聚焦重新请求
 * 轮询
 * 防抖
 * 节流
 * 依赖请求
 * 突变
-* loading
+* loading delay
 
 ## 请求方式
 如果service是object,useRequest会使用 Fetch 来发送网络请求
@@ -42,8 +44,14 @@ const { data, loading } = useRequest(
         );
     },
 );
+watchEffect(()=>{
+    console.log( data?.value );
+})
 ```
 在这个例子中， useRequest 接收了一个异步函数 ，在组件初次加载时， 自动触发该函数执行。同时 useRequest 会自动管理异步请求的 loading , data 状态。你可以通过data和loading来实现你的需求
+
+
+因为返回的data为响应式，js中获取data.value需要在watchEffect中使用，而在template中使用是不需要的。
 
 ### 手动触发
 
@@ -130,6 +138,42 @@ const { data, loading } = useRequest(
 );
 ```
 通过设置 options.throttleInterval ，则进入节流模式。此时如果频繁触发 run ，则会以节流策略进行请求。
+
+
+
+### 缓存 & SWR
+
+```
+const { data, loading } = useRequest(
+    () => {
+        return axios.post(
+            `http://xxx.xx.com/api/userInfo`
+        );
+    },
+    {
+        caccacheKey: 'mock1'
+    }
+);
+```
+如果设置了 options.cacheKey ， useRequest 会将当前请求结束数据缓存起来。下次组件初始化时，如果有缓存数据，我们会优先返回缓存数据，然后在背后发送新请求，也就是 SWR 的能力。你可以通过 cacheTime 设置缓存数据回收时间，也可以通过 staleTime 设置数据保持新鲜时间。
+
+
+### 预加载
+
+```
+const { data, loading } = useRequest(
+    () => {
+        return axios.post(
+            `http://xxx.xx.com/api/userInfo`
+        );
+    },
+    {
+        caccacheKey: 'mock1'
+    }
+);
+```
+同一个 cacheKey 的请求，是全局共享的，也就是你可以提前请求数据。后续请求会提前返回之前预加载的数据，利用该特性，可以很方便的实现预加载。
+
 
 ### 屏幕聚焦重新请求
 
@@ -238,6 +282,9 @@ setInterval(()=>{
 | debounceInterval | 防抖间隔, 单位为毫秒，设置后，请求进入防抖模式。 | number | - |
 | throttleInterval | 节流间隔, 单位为毫秒，设置后，请求进入节流模式。 | number | - |
 | ready | 只有当 ready 为 true 时，才会发起请求 | boolean | - |
+| cacheKey | * 请求唯一标识。如果设置了 cacheKey，我们会启用缓存机制 * 我们会缓存每次请求的 data , error , params , loading在缓存机制下 * 同样的请求我们会先返回缓存中的数据，同时会在背后发送新的请求，待新数据返回后，重新触发数据更新 | string | - |
+| cacheTime | 设置缓存数据回收时间。默认缓存数据 5 分钟后回收，需要配和 cacheKey 使用 | number | 300000 |
+| staleTime | 缓存数据保持新鲜时间。在该时间间隔内，认为数据是新鲜的，不会重新发请求，需要配和 cacheKey 使用 | number | 0 |
 
 
 ## 致敬

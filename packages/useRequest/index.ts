@@ -20,8 +20,14 @@ import { loadingDelayAsync } from './src/tools';
 import { serveiceProxy, argsSymbolKey } from './src/service';
 import Polling from './src/polling';
 import { visibility } from './src/visibility';
-import memoryCache from './src/memoryCache'
+import { handleResCache } from './src/cache'
+import memoryCache from '../utils/memoryCache'
 
+// service请求参数缓存
+const reqCache = new memoryCache();
+
+// 请求参数缓存
+const resCache = new memoryCache();
 
 
 // 默认参数
@@ -37,6 +43,8 @@ const defaultOptions = {
     focusTimespan: undefined, // 屏幕聚焦重新间隔
     loadingDelay: 0, // loading延迟时间
     refreshDeps: [], //依赖刷新监听
+    cacheTime: 300000, //缓存数据回收时间
+    staleTime: 0, //缓存数据新鲜时间
 };
 
 
@@ -53,12 +61,16 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
         refreshOnWindowFocus,
         focusTimespan,
         loadingDelay,
-        refreshDeps
+        refreshDeps,
+        cacheKey,
+        cacheTime,
+        staleTime
     } = { ...defaultOptions, ...options };
 
     const data = shallowRef<T | undefined>(undefined);
     const loading = ref(true);
     const cancel = ref<Cancel>(undefined);
+    const latestTime = ref<number>(0);
 
 
     // 执行轮询
@@ -72,25 +84,48 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
 
     // 执行网络请求
     let run:Run = (...args: any[])=>{
+        
+        // 请求开始时间
+        const reqTime = +new Date();
 
-        loading.value = true;
+        // 判断开启缓存 && 有缓存，先返回缓存
+        // 缓存修改并不会阻止顺序执行，service请求会继续发出
+        // 也就是所谓SWR能力
+        if( cacheKey && resCache.has(cacheKey)){
+            data.value = resCache.get(cacheKey)
+            
+            if( latestTime.value + staleTime > reqTime ){
+                return
+            }
+        }else{
+            loading.value = true;
+        }
 
-        // 设定请求开始时间
-        const startTime = +new Date();
+        
+        // 更新最新一次请求开始时间
+        latestTime.value = reqTime;
 
-        serveiceProxy( service, args ).then((responseData)=>{
+        serveiceProxy( service, args, reqCache ).then((responseData)=>{
             //loading延迟计算
-            return loadingDelayAsync( startTime, loadingDelay, responseData );
+            return loadingDelayAsync( latestTime.value, loadingDelay, responseData );
         }).then(( responseData )=>{
             data.value = responseData as any;
             loading.value = false;
+
+            // 处理缓存
+            handleResCache(
+                responseData,
+                resCache,
+                cacheKey,
+                cacheTime
+            )
         });
         // 非激活状态执行轮询
         pollingRun()
     };
 
     const refresh = ()=>{
-        const args = memoryCache.get(argsSymbolKey);
+        const args = reqCache.get(argsSymbolKey);
         run(...args)
     };
 

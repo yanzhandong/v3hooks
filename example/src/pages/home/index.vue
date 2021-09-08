@@ -1,16 +1,15 @@
 <template>
   <div class="hello">
+    <h4>第一测试</h4>
     <p>{{ loading ? "loading" : data }}</p>
     <button @click="run">发起</button>
     <button @click="cancel">取消</button>
     <button @click="handleMutate">突变测试</button>
     <button @click="handleRefreshDeps">refreshDeps测试</button>
-
-    <p>useBooleanState：{{ useBooleanState }}</p>
-    <button @click="useBooleanToggle">toggle</button>
-    <button @click="setTrue">setTrue</button>
-    <button @click="setFalse">setFalse</button>
     
+    <h4>第二Cache测试</h4>
+    <p>{{ loading2 ? "loading" : data2 }}</p>
+    <button @click="run2">发起</button>
   </div>
 </template>
 
@@ -28,9 +27,10 @@ import { ref } from 'vue';
 // 模拟列表请求
 const mockRequest = ()=>{
   return new Promise((resolve)=>{
+    console.log(1231)
     useTimeout(()=>{
-      resolve({code:200,data:[{name:'aaa'},{name:'bbbbb'},{name:'ccccc'}]})
-    },500)
+      resolve({code:200,time:+(new Date()),data:[{name:'aaa'},{name:'bbbbb'},{name:'ccccc'}]})
+    },1000)
   })
 };
 
@@ -55,7 +55,22 @@ export default {
       {
         // manual: true,
         refreshDeps: [ refreshTest ],
-        refreshOnWindowFocus: true
+        refreshOnWindowFocus: true,
+        cacheKey: 'mock1'
+      }
+    );
+
+    const { data:data2, run:run2, loading:loading2 } = useRequest(
+      () => {
+        return mockRequest();
+      },
+      {
+        // manual: true,
+        refreshDeps: [ refreshTest ],
+        refreshOnWindowFocus: true,
+        cacheKey: 'mock1',
+        cacheTime: 6000,
+        staleTime: 3000
       }
     );
     
@@ -84,6 +99,11 @@ export default {
       cancel,
       handleMutate,
       handleRefreshDeps,
+
+
+      data2,
+      run2,
+      loading2
     };
   },
 };

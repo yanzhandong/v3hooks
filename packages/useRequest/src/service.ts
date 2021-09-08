@@ -1,13 +1,13 @@
 
 import fetchData from './fetch'
-import memoryCache from './memoryCache'
+import MemoryCache from '../../utils/memoryCache'
 
-const argsSymbolKey = Symbol('argsKey');
+const argsSymbolKey = 'argsKey';
 
-const serveiceProxy = async (service: any, args: any[])=>{
+const serveiceProxy = async (service: any, args: any[], reqParamsCache: MemoryCache)=>{
     try{
         if( args.length > 0 ){
-            memoryCache.set(argsSymbolKey,args);
+            reqParamsCache.put(argsSymbolKey,args);
         }
         if( Object.prototype.toString.call(service) === "[object Function]"){
             return await service(...args);

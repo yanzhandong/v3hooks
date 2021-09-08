@@ -19,7 +19,10 @@ export interface BaseOptions {
     refreshOnWindowFocus?: boolean, // 屏幕聚焦重新请求
     focusTimespan?: undefined | number, // 屏幕聚焦重新间隔
     loadingDelay?: number, //loading延迟时间
-    refreshDeps?: any[] //依赖刷新监听
+    refreshDeps?: any[], //依赖刷新监听
+    cacheKey?: string, //缓存key
+    cacheTime?: number, //缓存数据回收时间
+    staleTime?: number //缓存数据新鲜时间
 };
 
 // 执行请求
