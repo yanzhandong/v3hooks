@@ -259,6 +259,7 @@ setInterval(()=>{
 | 参数 | 说明 | 类型 |
 | :----| :---- | :---- |
 | data | service 返回的数据，默认为 undefined | undefined / any |
+| error | service 抛出的异常，默认为 undefined | undefined / Error |
 | loading | service 是否正在执行 | boolean |
 | run | 手动触发 service 执行，参数会传递给 service | (...args: any[]) => void |
 | refresh | 使用上一次的 params，重新执行 service| () => void |

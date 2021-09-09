@@ -40,10 +40,11 @@ export type Mutate = (state:any)=> void;
 
 // hook返回值
 export interface Result<T> {
-    data?: Ref<T | undefined>; // 是否需要手动触发
-    loading?: Ref<boolean>;
+    data: Ref<T | undefined>; // 是否需要手动触发
+    loading: Ref<boolean>;
     run: Run;
     refresh: Refresh;
     cancel: Ref<Cancel>;
     mutate: Mutate;
+    error: Ref<Error | undefined>;
 };

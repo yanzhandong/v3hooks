@@ -17,7 +17,7 @@ const serveiceProxy = async (service: any, args: any[], reqParamsCache: MemoryCa
             return response.json()
         }
     }catch(error){
-        console.error(error);
+        return Promise.reject(error)
     }
 }
 

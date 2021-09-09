@@ -68,6 +68,7 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
     } = { ...defaultOptions, ...options };
 
     const data = shallowRef<T | undefined>(undefined);
+    const error = ref<Error | undefined >(undefined);
     const loading = ref(true);
     const cancel = ref<Cancel>(undefined);
     const latestTime = ref<number>(0);
@@ -119,6 +120,8 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
                 cacheKey,
                 cacheTime
             )
+        }).catch(( e )=>{
+            error.value = new Error(e);
         });
         // 非激活状态执行轮询
         pollingRun()
@@ -193,6 +196,7 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
     // 返回值
     const res: Result<T> = {
         data,
+        error,
         run,
         refresh,
         loading,
