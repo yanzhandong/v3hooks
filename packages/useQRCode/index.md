@@ -41,7 +41,7 @@ export default {
 </script>
 ```
 
-useCookie返回当前网络状态个参数.
+usQRCide接受一个静态url，也可以是一个被Ref包裹的url，当Ref值发生变化时，二维码会跟随内容进行变化。
 
 
 ## Api

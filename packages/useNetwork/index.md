@@ -29,7 +29,7 @@ export default {
 </script>
 ```
 
-useCookie返回当前网络状态个参数.
+useNetwork返回网络状态信息
 
 
 ## Api
