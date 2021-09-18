@@ -36,6 +36,7 @@ const defaultOptions = {
     initialData: undefined,
     onSuccess: ()=>{},
     onError: ()=>{},
+    formatResult: (data:any)=> data,
     defaultParams: [], 
     pollingInterval: 0,
     pollingWhenHidden: true,
@@ -58,6 +59,7 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
         initialData,
         onSuccess,
         onError,
+        formatResult,
         defaultParams,
         pollingInterval,
         pollingWhenHidden,
@@ -116,12 +118,12 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
             //loading延迟计算
             return loadingDelayAsync( latestTime.value, loadingDelay, responseData );
         }).then(( responseData )=>{
-
+            responseData = formatResult(responseData)
             data.value = responseData as any;
-            
+
             loading.value = false;
 
-            onSuccess(responseData)
+            onSuccess(responseData,args)
 
             // 处理缓存
             handleResCache(

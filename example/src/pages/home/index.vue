@@ -55,6 +55,14 @@ export default {
       {
         // manual: true,
         refreshDeps: [ refreshTest ],
+        formatResult(data){
+          const {time,...other} = data;
+          console.log(time)
+          return other
+        },
+        onSuccess(data){
+          console.log(data,'success')
+        },
         refreshOnWindowFocus: true,
         cacheKey: 'mock1'
       }
