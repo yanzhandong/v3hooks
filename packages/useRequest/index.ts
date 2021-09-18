@@ -32,19 +32,22 @@ const resCache = new memoryCache();
 
 // 默认参数
 const defaultOptions = {
-    manual: false, // 是否开启手动
-    defaultParams: [], //如果 manual=false ，自动执行 run 的时候，默认带上的参数
-    pollingInterval: 0, // 轮询请求时间
-    pollingWhenHidden: true, // 屏幕不可见时，暂时暂停定时任务
-    ready: undefined, // 依赖请求
-    debounceInterval: undefined, // 防抖
-    throttleInterval: undefined, // 节流
-    refreshOnWindowFocus: false, // 屏幕聚焦重新请求
-    focusTimespan: undefined, // 屏幕聚焦重新间隔
-    loadingDelay: 0, // loading延迟时间
-    refreshDeps: [], //依赖刷新监听
-    cacheTime: 300000, //缓存数据回收时间
-    staleTime: 0, //缓存数据新鲜时间
+    manual: false,
+    initialData: undefined,
+    onSuccess: ()=>{},
+    onError: ()=>{},
+    defaultParams: [], 
+    pollingInterval: 0,
+    pollingWhenHidden: true,
+    ready: undefined,
+    debounceInterval: undefined,
+    throttleInterval: undefined,
+    refreshOnWindowFocus: false,
+    focusTimespan: undefined,
+    loadingDelay: 0,
+    refreshDeps: [],
+    cacheTime: 300000,
+    staleTime: 0,
 };
 
 
@@ -52,6 +55,9 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
      
     const { 
         manual,
+        initialData,
+        onSuccess,
+        onError,
         defaultParams,
         pollingInterval,
         pollingWhenHidden,
@@ -67,7 +73,7 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
         staleTime
     } = { ...defaultOptions, ...options };
 
-    const data = shallowRef<T | undefined>(undefined);
+    const data = shallowRef<T | undefined>(initialData);
     const error = ref<Error | undefined >(undefined);
     const loading = ref(true);
     const cancel = ref<Cancel>(undefined);
@@ -110,8 +116,12 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
             //loading延迟计算
             return loadingDelayAsync( latestTime.value, loadingDelay, responseData );
         }).then(( responseData )=>{
+
             data.value = responseData as any;
+            
             loading.value = false;
+
+            onSuccess(responseData)
 
             // 处理缓存
             handleResCache(
@@ -121,7 +131,11 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
                 cacheTime
             )
         }).catch(( e )=>{
+            loading.value = false;
+
             error.value = new Error(e);
+
+            onError(error.value,args)
         });
         // 非激活状态执行轮询
         pollingRun()

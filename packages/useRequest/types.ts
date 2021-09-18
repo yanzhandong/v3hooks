@@ -10,6 +10,9 @@ export interface FetchService extends FetchParams{};
 // 请求参数
 export interface BaseOptions {
     manual?: boolean; // 是否需要手动触发
+    initialData?: any; //默认的 data
+    onSuccess?: (response: any) => any; // 成功回调
+    onError?: (error: Error, params: any[]) => void; // 失败回调
     defaultParams?: any[]; // 如果 manual=false ，自动执行 run 的时候，默认带上的参数
     pollingInterval?: number; // 轮询请求时间
     pollingWhenHidden?: boolean; // 在屏幕不可见时，暂时暂停定时任务。
