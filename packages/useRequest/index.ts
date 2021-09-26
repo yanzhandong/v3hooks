@@ -77,7 +77,7 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
 
     const data = shallowRef<T | undefined>(initialData);
     const error = ref<Error | undefined >(undefined);
-    const loading = ref(true);
+    const loading = ref(false);
     const cancel = ref<Cancel>(undefined);
     const latestTime = ref<number>(0);
 
