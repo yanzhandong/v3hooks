@@ -1,6 +1,6 @@
 {
   "name": "v3hooks",
-  "version": "1.3.3",
+  "version": "1.3.5",
   "author": "yanzhandong",
   "description": "针对 Vue3 的实用Hooks集合",
   "keywords": [
