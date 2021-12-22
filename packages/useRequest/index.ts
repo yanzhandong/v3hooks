@@ -16,7 +16,7 @@ import {
     throttle, 
     throttleAndDeBounce 
 } from '../utils';
-import { loadingDelayAsync } from './src/tools';
+import { loadingDelayAsync, clearLoadingDelayTimer } from './src/loadingDelay';
 import { serveiceProxy, argsSymbolKey } from './src/service';
 import Polling from './src/polling';
 import { visibility } from './src/visibility';
@@ -106,7 +106,9 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
             if( latestTime.value + staleTime > reqTime ){
                 return
             }
-        }else{
+        }else if(loadingDelay > 0){
+            loadingDelayAsync( loadingDelay ).then(()=> loading.value = true)
+        }else {
             loading.value = true;
         }
 
@@ -114,10 +116,9 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
         // 更新最新一次请求开始时间
         latestTime.value = reqTime;
 
-        serveiceProxy( service, args, reqCache ).then((responseData)=>{
-            //loading延迟计算
-            return loadingDelayAsync( latestTime.value, loadingDelay, responseData );
-        }).then(( responseData )=>{
+        serveiceProxy( service, args, reqCache ).then(( responseData )=>{
+            clearLoadingDelayTimer();
+
             responseData = formatResult(responseData)
             data.value = responseData as any;
 
@@ -132,10 +133,10 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
                 cacheKey,
                 cacheTime
             )
-        }).catch(( e )=>{
+        }).catch(( e:Error )=>{
             loading.value = false;
 
-            error.value = new Error(e);
+            error.value = e;
 
             onError(error.value,args)
         });
@@ -144,7 +145,7 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
     };
 
     const refresh = ()=>{
-        const args = reqCache.get(argsSymbolKey);
+        const args = reqCache.get(argsSymbolKey) || [];
         run(...args)
     };
 
@@ -161,8 +162,8 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
 
 
     //监听依赖请求是否执行
-    watch([ready],(curr)=>{
-        if( curr[0]?.value === true){
+    watch(()=> ready,(curr)=>{
+        if( curr?.value === true){
             refresh()
         }
     },{ deep: true })
@@ -172,7 +173,7 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
 
     
     // 防抖+节流
-    if( 
+    if(
         debounceInterval !== undefined 
         && throttleInterval !== undefined
         && typeof(debounceInterval) === 'number'

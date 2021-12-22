@@ -43,6 +43,7 @@ export default {
     // useRequest demo测试
     const refreshTest = ref(11);
     // const refreshTest2 = ref(11);
+    const isReady = ref(false);
 
     const { data, run, loading, cancel, mutate } = useRequest(
       () => {
@@ -54,19 +55,20 @@ export default {
       },
       {
         // manual: true,
+        ready:isReady,
+        // loadingDelay: 1000,
         refreshDeps: [ refreshTest ],
-        formatResult(data){
-          const {time,...other} = data;
-          console.log(time)
-          return other
-        },
         onSuccess(data){
           console.log(data,'success')
         },
         refreshOnWindowFocus: true,
-        cacheKey: 'mock1'
       }
     );
+
+    setTimeout(()=>{
+      console.log('isReady');
+      isReady.value = true
+    },1000)
 
     const { data:data2, run:run2, loading:loading2 } = useRequest(
       () => {
