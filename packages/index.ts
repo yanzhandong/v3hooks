@@ -24,6 +24,7 @@ import useInterval from './useInterval/index'
 import useTimeout from './useTimeout/index'
 import useQRCode from './useQRCode/index'
 import useWebSocket from './useWebSocket/index'
+import useUnmount from './useUnmount/index'
 
 // 暂时无法@/分包 未引入vue-router会导致都不能用
 // import useRouteQuery from './useRouteQuery/index';
@@ -65,6 +66,7 @@ export {
     useQRCode,
 
     //Advanced
-    useLockFn
+    useLockFn,
+    useUnmount
 
 }

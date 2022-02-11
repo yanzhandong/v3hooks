@@ -18,7 +18,7 @@
 import { 
   useRequest, 
   useTimeout
-} from "../../../dist/index.js";
+} from "v3hooks";
 
 import { ref } from 'vue';
 // import axios from "axios";
@@ -30,7 +30,7 @@ const mockRequest = ()=>{
     console.log(1231)
     useTimeout(()=>{
       resolve({code:200,time:+(new Date()),data:[{name:'aaa'},{name:'bbbbb'},{name:'ccccc'}]})
-    },1000)
+    },500)
   })
 };
 
@@ -54,7 +54,8 @@ export default {
         return mockRequest();
       },
       {
-        // manual: true,
+        manual: true,
+        pollingInterval: 1000,
         ready:isReady,
         // loadingDelay: 1000,
         refreshDeps: [ refreshTest ],

@@ -78,9 +78,10 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
     const data = shallowRef<T | undefined>(initialData);
     const error = ref<Error | undefined >(undefined);
     const loading = ref(false);
-    const cancel = ref<Cancel>(undefined);
     const latestTime = ref<number>(0);
 
+    // 取消轮询
+    const cancel:Cancel = () => Polling.cancel();
 
     // 执行轮询
     const pollingRun = ()=>{
@@ -88,7 +89,6 @@ const useRequest = <T>(service: Service | FetchService,options?:BaseOptions )=>{
             return
         }
         Polling.run( run, pollingInterval, pollingWhenHidden );
-        cancel.value = ()=>{ Polling.cancel() };
     };
 
     // 执行网络请求

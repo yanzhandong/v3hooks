@@ -36,7 +36,7 @@ export type Run = (...args: any[])=> void;
 export type Refresh = ()=> void;
 
 //取消请求
-export type Cancel = undefined | (()=> void);
+export type Cancel = (()=> void);
 
 // 突变
 export type Mutate = (state:any)=> void;
@@ -48,7 +48,7 @@ export interface Result<T> {
     loading: Ref<boolean>;
     run: Run;
     refresh: Refresh;
-    cancel: Ref<Cancel>;
+    cancel: Cancel;
     mutate: Mutate;
     error: Ref<Error | undefined>;
 };
