@@ -10,9 +10,9 @@ const defaultOptions = {
 }
 
 const useSessionStorage = <T = any>( key: string, initialValue?: T | Ref<T>, options?:Options)=>{
-    
+
     const { watch } = { ...defaultOptions, ...options };
-    
+
     const data = ref() as Ref<T | undefined | null>;
     try{
         if( initialValue !== undefined ){
@@ -23,14 +23,14 @@ const useSessionStorage = <T = any>( key: string, initialValue?: T | Ref<T>, opt
     }catch(error){
         console.log(error,'useLocalStorage初始化失败')
     }
-    
+
     const type = getValueType(data.value);
 
     // 判断类型取格式化方法
     let serializer = TypeSerializers[type];
 
 
-    const setStorage = ()=> storage.setItem( key, serializer.write(data.value) );;
+    const setStorage = ()=> storage.setItem( key, serializer.write(data.value) );
 
     // 状态监听
     if( watch ){
@@ -48,7 +48,7 @@ const useSessionStorage = <T = any>( key: string, initialValue?: T | Ref<T>, opt
             }
         )
     }
-    
+
     setStorage()
 
     return data
