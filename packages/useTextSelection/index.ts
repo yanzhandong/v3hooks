@@ -1,4 +1,4 @@
-import { 
+import {
     Ref,
     isRef,
     reactive,
@@ -49,7 +49,7 @@ const useTextSelection = (
         };
     };
 
-    const hanleMouseup = ()=>{
+    const handleMouseup = ()=>{
         let currSelection: Selection | null = window.getSelection();
         let text = currSelection ? currSelection.toString() : '';
         let rect = getRect( currSelection );
@@ -58,7 +58,7 @@ const useTextSelection = (
         state.rect = rect;
     };
 
-    const hanldeMousedown = ()=>{
+    const handleMousedown = ()=>{
         if( state.text ){
             state.text = ''
             state.rect = defaultReact;
@@ -70,13 +70,13 @@ const useTextSelection = (
 
     onMounted(()=>{
         el = getEl();
-        el.addEventListener('mouseup',hanleMouseup);
-        document.addEventListener('mousedown', hanldeMousedown);
+        el.addEventListener('mouseup',handleMouseup);
+        document.addEventListener('mousedown', handleMousedown);
     })
 
     onUnmounted(()=>{
-        el.removeEventListener('mouseup',hanleMouseup);
-        document.removeEventListener('mousedown', hanldeMousedown);
+        el.removeEventListener('mouseup',handleMouseup);
+        document.removeEventListener('mousedown', handleMousedown);
     })
 
     return toRefs( state )
