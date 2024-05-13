@@ -105,7 +105,7 @@ export default {
     const { data, run, loading, cancel, mutate } = useRequest(
       (mobile:number, code:string) => {
         return axios.post(
-          `https://dss-pre.xiongmaopeilian.com/student_app/auth/login?mobile=${mobile}&code=${code}`
+          `http://localhost:8080?mobile=${mobile}&code=${code}`
         );
       },
       {
